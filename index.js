@@ -3,8 +3,8 @@ const rgbHex = require('rgb-hex')
 const fs = require('fs')
 
 PNG.decode('marco.png', function (pixels) {
-	const offsetX = 0
-	const offsetY = 0
+	const offsetX = 869
+	const offsetY = 766
 	const colors = {
 		"ffffff": 0,
 		"e4e4e4": 1,
@@ -27,8 +27,8 @@ PNG.decode('marco.png', function (pixels) {
 	var botColors = []
 	// pixels is a 1d array (in rgba order) of decoded pixel data
 	for (let i = 0; i < pixels.length; i += 4) {
-		var x = Math.floor((i / 4) / 15)
-		var y = i / 4 - x * 15
+		var y = Math.floor((i / 4) / 15)
+		var x = i / 4 - y * 15
 
 		var [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]]
 		var rgb = rgbHex(r, g, b)
