@@ -23,17 +23,19 @@ PNG.decode('marco.png', function (pixels) {
 		"cf6ee4": 14,
 		"820080": 15,
 	}
+	const transparencyColor = "ff00cc"
 	var botColors = []
 	// pixels is a 1d array (in rgba order) of decoded pixel data
 	for (let i = 0; i < pixels.length; i += 4) {
-		var x = Math.floor((i / 4) / 43)
-		var y = i / 4 - x * 43
+		var x = Math.floor((i / 4) / 15)
+		var y = i / 4 - x * 15
 
 		var [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]]
 		var rgb = rgbHex(r, g, b)
 		var colorId = colors[rgb]
-
-		botColors.push([offsetX + x, offsetY + y, colorId])
+		if (rgb !== "ff00cc") {
+			botColors.push([offsetX + x, offsetY + y, colorId])
+		}
 		//console.log(`x:${x}, y:${y}`);
 	}
 	fs.writeFileSync('output.txt', JSON.stringify(botColors))
