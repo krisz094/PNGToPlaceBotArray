@@ -1,8 +1,15 @@
 const PNG = require('png-js');
 const rgbHex = require('rgb-hex')
 const fs = require('fs')
+const sizeOf = require('image-size')
 
-PNG.decode('marco.png', function (pixels) {
+const imagePath = 'input.png'
+const transparencyColor = "ff00cc"
+
+var dimensions = sizeOf(imagePath)
+var width = dimensions.width
+
+PNG.decode(imagePath, function (pixels) {
 	const offsetX = 869
 	const offsetY = 766
 	const colors = {
@@ -23,12 +30,12 @@ PNG.decode('marco.png', function (pixels) {
 		"cf6ee4": 14,
 		"820080": 15,
 	}
-	const transparencyColor = "ff00cc"
+	
 	var botColors = []
 	// pixels is a 1d array (in rgba order) of decoded pixel data
 	for (let i = 0; i < pixels.length; i += 4) {
-		var y = Math.floor((i / 4) / 15)
-		var x = i / 4 - y * 15
+		var y = Math.floor((i / 4) / width)
+		var x = i / 4 - y * width
 
 		var [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]]
 		var rgb = rgbHex(r, g, b)
