@@ -40,7 +40,7 @@ PNG.decode(imagePath, function (pixels) {
 		var [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]]
 		var rgb = rgbHex(r, g, b)
 		var colorId = colors[rgb]
-		if (rgb !== "ff00cc") {
+		if (rgb !== transparencyColor) {
 			botColors.push([offsetX + x, offsetY + y, colorId])
 		}
 		//console.log(`x:${x}, y:${y}`);
