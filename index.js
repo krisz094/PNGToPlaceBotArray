@@ -30,8 +30,9 @@ PNG.decode(imagePath, function (pixels) {
 		"cf6ee4": 14,
 		"820080": 15,
 	}
-	
+
 	var botColors = []
+	var flag = false
 	// pixels is a 1d array (in rgba order) of decoded pixel data
 	for (let i = 0; i < pixels.length; i += 4) {
 		var y = Math.floor((i / 4) / width)
@@ -39,12 +40,21 @@ PNG.decode(imagePath, function (pixels) {
 
 		var [r, g, b] = [pixels[i], pixels[i + 1], pixels[i + 2]]
 		var rgb = rgbHex(r, g, b)
-		var colorId = colors[rgb]
+
 		if (rgb !== transparencyColor) {
-			botColors.push([offsetX + x, offsetY + y, colorId])
+			var colorId = colors[rgb]
+			if (colorId == null) {
+				flag = true
+			} else {
+				botColors.push([offsetX + x, offsetY + y, colorId])
+			}
 		}
-		//console.log(`x:${x}, y:${y}`);
 	}
 	fs.writeFileSync('output.txt', JSON.stringify(botColors))
 	console.log("Done!");
+	if (flag) {
+		console.log(
+`Your image contained colors that aren't allowed in r/place.
+Those are not included in the coordinates`)
+	}
 });
